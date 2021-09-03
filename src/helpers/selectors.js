@@ -1,28 +1,17 @@
-import DayList from "components/DayList";
 
-export function getAppointmentsForDay(state, day) {
-  let todaysAppointment = [];
-  let appointmentIds;
-//we need to find the day by matching with the state data by doing a loop
-  for (let array in state.days) {
-    if (state.days[array].name === day) {
-      appointmentIds = state.days[array].appointments
-    }
+export default function getAppointmentsForDay(state, day) {
+  let results = [];
+
+  //find the day that matches, return empty array if there is no day and the 
+  //day does not exist
+  const dayObj = state.days.find(item => item.name === day);
+  if (!dayObj || !state.days.length) {
+    return []
   }
-  if (!appointmentIds) {
-    return [];
+
+  for (const id of dayObj.appointments) {
+    const appointment = state.appointments[id]
+    results.push(appointment)
   }
-  if (state.days === []) {
-    return [];
-  }
-  for (let id of appointmentIds) {
-    console.log("state.appointments[id----- ", state.appointments[id])
-    if (state.appointments.id = id) {
-      let currentAppointment = state.appointments[id]
-      console.log("currentAppointment: ", currentAppointment)
-      todaysAppointment.push(currentAppointment)
-      console.log({ todaysAppointment })
-    }
-  }
-  return todaysAppointment
-}
+  return results;
+};
