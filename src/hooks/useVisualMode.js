@@ -43,5 +43,5 @@ function transition (mode, replace = false) {
 }
 
 //for the test case with (THIRD, replace = true) it will automatically
-//setMode(mode) therefore THIRD, when you press back got see function back which
+//setMode(mode) therefore THIRD, when you press function back which
 //will use the history array instead.

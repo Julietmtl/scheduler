@@ -24,8 +24,6 @@ export default function Appointment (props) {
     props.interview ? SHOW : EMPTY
   )
 
-  console.log('mode in index.js:', mode)
-
   function save (name, interviewer) {
     const interview = {
       student: name,
@@ -36,14 +34,10 @@ export default function Appointment (props) {
     .catch(err => transition(ERROR_SAVE, true))
   }
 
-  function onDelete () {
-    transition(CONFIRM)
-  }
-
   function confirmDelete () {
-    transition(DELETING)
+    transition(DELETING, true)
     props.cancelInterview(props.id)
-    .then(() => transition(SHOW))
+    .then(() => transition(EMPTY))
     .catch(err => transition(ERROR_DELETE, true))
   }
 
@@ -80,7 +74,7 @@ export default function Appointment (props) {
       )}
       {mode === SAVING && <Status message={'Saving'} />}
       {mode === DELETING && <Status message={'Deleting'} />}
-      {mode === CONFIRM && <Confirm onConfirm={confirmDelete} onCancel={() =>back(SHOW)} message={'Are you sure you want to delete?'} />}
+      {mode === CONFIRM && <Confirm onConfirm={confirmDelete} onCancel={() =>back()} message={'Are you sure you want to delete?'} />}
       {mode === EDIT && <Form
                name={props.interview.student}
                interviewer={props.interviewer}
@@ -89,8 +83,8 @@ export default function Appointment (props) {
                onSave={save}
                />
             }
-      {mode === ERROR_SAVE && <Error message={'Error Saving'} onClose={() => back(SHOW)}/>}
-      {mode === ERROR_DELETE && <Error message={'Error Deleting'} onClose={() => back(SHOW)} />}
+      {mode === ERROR_SAVE && <Error message={'Error Saving'} onClose={() => back()}/>}
+      {mode === ERROR_DELETE && <Error message={'Error Deleting'} onClose={() => back()} />}
     </Fragment>
   )
 }

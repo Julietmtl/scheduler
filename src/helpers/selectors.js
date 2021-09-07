@@ -1,4 +1,4 @@
-import InterviewerList from "components/InterviewerList";
+
 
 export function getAppointmentsForDay(state, day) {
   let results = [];
