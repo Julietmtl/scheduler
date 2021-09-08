@@ -52,10 +52,10 @@ export default function Appointment (props) {
 
   return (
     <Fragment>
-      <article className='appointment'></article>
+      <article className='appointment'>
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      {(mode === SHOW && props.interview) && (
+      {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
@@ -85,6 +85,7 @@ export default function Appointment (props) {
             }
       {mode === ERROR_SAVE && <Error message={'Error Saving'} onClose={() => back()}/>}
       {mode === ERROR_DELETE && <Error message={'Error Deleting'} onClose={() => back()} />}
+      </article>
     </Fragment>
   )
 }

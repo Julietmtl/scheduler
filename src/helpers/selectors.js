@@ -43,7 +43,6 @@ export function getInterviewersForDay(state, day) {
   for (const id of dayObj.interviewers) {
     const interviewer = state.interviewers[id]
     interviewers.push(interviewer)
-    console.log("interviewers: ", interviewers)
   }
   return interviewers;
 };
