@@ -3,7 +3,6 @@ import "components/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem.js";
 import PropTypes from 'prop-types';
 
-
 function InterviewerList(props) {
   const parsedInterviewers = props.interviewers.map(interviewer => ( <InterviewerListItem
     key={interviewer.id} 
@@ -26,8 +25,3 @@ InterviewerList.propTypes = {
 };
 
 export default InterviewerList;
-
-
-// interviewers:array - an array of objects containing the information of each interviewer
-// interviewer:number - the id of an interviewer
-// setInterviewer:function - a function that accepts an interviewer id
