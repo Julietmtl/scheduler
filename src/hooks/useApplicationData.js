@@ -29,89 +29,81 @@ export default function useApplicationData () {
     })
   }, [])
 
-// trying to find the day by id matched to the days[array]appointments which is an array of appointment Ids
-//which will return that particular day object
+  // trying to find the day by id matched to the days[array]appointments which is an array of appointment Ids
+  // which will return that particular day object
   function findDay (id, days) {
     for (const day of days) {
       for (const appointmentId of day.appointments) {
         if (appointmentId === id) {
-          return day;
+          return day
         }
       }
     }
-    return null;
-  }
- 
-
-function updateSpots(id, days, appointments) {
-  const foundDayWithIdInArray = findDay(id, state.days)
-  
-  //count all the null interview by matching the appointments interview and the day appointments array of ID
-    let numberOfSpots = 0;
-  for (const appointmentId of foundDayWithIdInArray.appointments) {
-  //for each Id we need to count the number of empty appointments
-    if(appointments[appointmentId].interview === null) {
-      numberOfSpots++
-    } 
+    return null
   }
 
-  // mapping the days and only changing the particular days spot count
-  //matching the day with the days api with the day that the appointment was booked
-  // we copy that particular day and change its spots value.
-  const dayResult = state.days.map(day => { if (day.name === foundDayWithIdInArray.name) {
-    return {...day, spots: numberOfSpots}
-  }
-  // if the name doesn't match it will just return the day object
-  return day
-  });
-  //this is the entire array of day objects which will include the name matched and the names not matched
-  return dayResult
-}
+  function updateSpots (id, days, appointments) {
+    const foundDayWithIdInArray = findDay(id, state.days)
+    //count all the null interview by matching the appointments interview and the day appointments array of ID
+    let numberOfSpots = 0
+    for (const appointmentId of foundDayWithIdInArray.appointments) {
+      //for each Id we need to count the number of empty appointments
+      if (appointments[appointmentId].interview === null) {
+        numberOfSpots++
+      }
+    }
 
+    // mapping the days and only changing that particular day spot count
+    // matching the appointment day booked with the days api
+    // we copy that particular day and change only its spots value.
+    const dayResult = state.days.map(day => {
+      if (day.name === foundDayWithIdInArray.name) {
+        return { ...day, spots: numberOfSpots }
+      }
+      // if the day doesn't match it will just return the unmatched day object that remains unchanged
+      return day
+    })
+    // this is the entire array of day objects which will include the day name matched and the names not matched
+    return dayResult
+  }
 
   function bookInterview (id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: {...interview}
-    };
-    
+      interview: { ...interview }
+    }
+
     const appointments = {
       ...state.appointments,
       [id]: appointment
-    };
+    }
 
-  
-//calling the function to update Spots
- const dayArray = updateSpots(id, state.days, appointments) 
+    //calling the function to update Spots
+    const dayArray = updateSpots(id, state.days, appointments)
 
- //days: dayArray --- this is using the setState
-
-
+    //days: dayArray --- this is using the setState
     const url = `/api/appointments/${id}`
-    return axios.put(url, {interview})
-    .then(res => {
-      setState({...state, appointments, days: dayArray})
+    return axios.put(url, { interview }).then(res => {
+      setState({ ...state, appointments, days: dayArray })
     })
   }
 
   function cancelInterview (id) {
-  
     const appointment = {
       ...state.appointments[id],
       interview: null
-    };
+    }
 
     const appointments = {
-      ...state.appointments, 
+      ...state.appointments,
       [id]: appointment
-    };
+    }
 
-    const dayArray = updateSpots(id, state.days, appointments) 
+    const dayArray = updateSpots(id, state.days, appointments)
 
     let url = `/api/appointments/${id}`
-    return axios.delete(url, {interview: null})
-    .then(res => {
-      setState({...state, appointments, days: dayArray})
+    return axios.delete(url, { interview: null }).then(res => {
+      setState({ ...state, appointments, days: dayArray })
     })
   }
 
