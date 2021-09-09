@@ -21,3 +21,8 @@ npm test
 ```sh
 npm run storybook
 ```
+## Screenshots
+
+!["Scheduler_form"](https://github.com/Julietmtl/scheduler/blob/master/docs/Scheduler_form.png?raw=true)
+!["Scheduler_confirm_delete"](https://github.com/Julietmtl/scheduler/blob/master/docs/Scheduler_confirm_delete.png?raw=true)
+!["Scheduler_error"](https://github.com/Julietmtl/scheduler/blob/master/docs/Scheduler_error.png?raw=true)
