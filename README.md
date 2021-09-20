@@ -4,6 +4,14 @@
 
 Install dependencies with `npm install`.
 
+## Dependencies
+axios
+classnames
+normalize.css
+react
+react-dom
+react-scripts
+
 ## Running Webpack Development Server
 
 ```sh

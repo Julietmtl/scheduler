@@ -28,7 +28,7 @@ function transition (mode, replace = false) {
 }
 
   function back () {
-    //has to be at least 2 items for this function to work to delete the lasts mode
+    //has to have at least 2 items for this function to work to delete the last mode
     //could also be history.length = 1 but does not eliminate the chance of history.length = 0
     if (history.length < 2) {
       return
