@@ -10,6 +10,10 @@ import Error from "./Error.js";
 import useVisualMode from "hooks/useVisualMode";
 import axios from "axios";
 
+if (process.env.REACT_APP_API_BASE_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+}
+
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -20,10 +24,6 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
-
-  if (process.env.REACT_APP_API_BASE_URL) {
-    axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-  }
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
