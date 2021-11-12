@@ -1,3 +1,21 @@
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
+The deploy job depends on the build job. We also ignore the production branch to ensure that CircleCI doesn't test the production branch every time we push it from the master branch.
+
+The final .circleci/config.yml file should match the example below with the two required changes.
+
 version: 2
 jobs:
   build:
@@ -19,21 +37,21 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
 
-deploy:
-  machine:
-    enabled: true
+  deploy:
+    machine:
+      enabled: true
 
-  working_directory: ~/client
+    working_directory: ~/client
 
-  steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "f5:a9:09:29:d9:8f:6b:f9:60:d2:b5:18:0a:26:36:75"
-    - checkout
-    - run:
-        name: Push Master to Production
-        command: |
-          git push https://github.com/Julietmtl/scheduler.git master:production
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "f5:a9:09:29:d9:8f:6b:f9:60:d2:b5:18:0a:26:36:75"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/Julietmtl/scheduler.git master:production
 
 workflows:
   version: 2
