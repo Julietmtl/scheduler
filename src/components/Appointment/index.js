@@ -8,11 +8,6 @@ import Status from "./Status.js";
 import Confirm from "./Confirm.js";
 import Error from "./Error.js";
 import useVisualMode from "hooks/useVisualMode";
-import axios from "axios";
-
-if (process.env.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-}
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
